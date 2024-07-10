@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const desktopView = document.getElementById('desktopView');
     const mobileView = document.getElementById('mobileView');
     const iframe = document.getElementById('previewFrame');
+    const selectedTemplate = document.getElementById('selectedTemplate');
+    const templateList = document.getElementById('templateList');
 
     toggleMenu.addEventListener('click', function() {
         content.classList.toggle('show-menu');
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileView.classList.add('active');
         desktopView.classList.remove('active');
     });
+
 const templates = [
     { id: 1, name: '3-col-portfolio', url: 'https://learning-zone.github.io/website-templates/3-col-portfolio/' },
     { id: 2, name: 'above-educational-bootstrap-responsive-template', url: 'https://learning-zone.github.io/website-templates/above-educational-bootstrap-responsive-template/' },
@@ -154,40 +157,33 @@ const templates = [
     { id: 169, name: 'wedding-bootstrap-free-website-template', url: 'https://learning-zone.github.io/website-templates/wedding-bootstrap-free-website-template/' },
     { id: 170, name: 'wow-portfolio-multi-purpose-html5-template', url: 'https://learning-zone.github.io/website-templates/wow-portfolio-multi-purpose-html5-template/' },
 ];
-
-const templateList = document.getElementById('templateList');
-const previewFrame = document.getElementById('previewFrame');
-
 templates.forEach(template => {
-    const row = document.createElement('tr');
-
-    const idCell = document.createElement('td');
-    idCell.textContent = template.id;
-    row.appendChild(idCell);
-
-    const nameCell = document.createElement('td');
-    nameCell.textContent = template.name;
-    row.appendChild(nameCell);
-
-    const linkCell = document.createElement('td');
-    const link = document.createElement('a');
-    link.textContent = 'live example';
-    link.href = '#';
-    link.dataset.url = template.url;
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        previewFrame.src = e.target.dataset.url;
-    });
-    linkCell.appendChild(link);
-    row.appendChild(linkCell);
-
-    templateList.appendChild(row);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${template.id}</td>
+        <td>${template.name}</td>
+        <td><a href="#" class="previewLink" data-url="${template.url}" data-name="${template.name}" data-id="${template.id}">Preview</a></td>
+    `;
+    templateList.appendChild(tr);
 });
 
-document.getElementById('toggleMenu').addEventListener('click', function() {
-    document.querySelector('.content').classList.toggle('show-menu');
+templateList.addEventListener('click', function(event) {
+    if (event.target.classList.contains('previewLink')) {
+        event.preventDefault();
+        const url = event.target.dataset.url;
+        const name = event.target.dataset.name;
+        const id = event.target.dataset.id;
+
+        // Remove 'selected' class from all links
+        document.querySelectorAll('.previewLink').forEach(link => {
+            link.classList.remove('selected');
+        });
+
+        // Add 'selected' class to the clicked link
+        event.target.classList.add('selected');
+
+        iframe.src = url;
+        selectedTemplate.textContent = `Selected Template: ${name} (#${id})`;
+    }
 });
-
-
-
 });

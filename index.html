@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aperçus de Modèles</title>
+    <title>Template Previews</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Aperçus de Modèles</h1>
+            <h1>Template Previews</h1>
             <button id="toggleMenu" class="toggle-menu">☰</button>
         </header>
         <div class="content">
@@ -18,25 +18,26 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>N°</th>
-                                <th>Nom du Modèle</th>
-                                <th>Exemple en Direct</th>
+                                <th>Sl.No</th>
+                                <th>Template Name</th>
+                                <th>Live Example</th>
                             </tr>
                         </thead>
                         <tbody id="templateList">
-                            <!-- JavaScript remplira cela -->
+                            <!-- JavaScript will populate this -->
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="preview-container">
                 <div class="preview-controls">
-                    <button id="desktopView" class="active">Ordinateur</button>
+                    <button id="desktopView" class="active">Desktop</button>
                     <button id="mobileView">Mobile</button>
                 </div>
                 <div class="iframe-container">
                     <iframe id="previewFrame" src="" frameborder="0"></iframe>
                 </div>
+                <div id="selectedTemplate">Selected Template: None</div>
             </div>
         </div>
     </div>

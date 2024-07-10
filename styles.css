@@ -1,8 +1,9 @@
+/* Reset and global styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f2f5;
+    background-color: #cdce9b;
     color: #333;
 }
 
@@ -10,6 +11,7 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+    overflow: hidden;
 }
 
 header {
@@ -22,6 +24,25 @@ header {
 h1 {
     font-size: 24px;
     margin: 0;
+    color: #007bff;
+}
+
+.previewLink {
+    color: rgb(0, 0, 0); /* Default link color */
+    text-decoration: none;
+}
+
+.previewLink:hover {
+    color: rgb(252, 16, 16); /* Color when hovered */
+}
+
+.previewLink.selected {
+    background-color: rgb(0, 0, 0); /* Dark background color when selected */
+    color: #f2ff01; /* White text color */
+    padding: 8px 40px; /* Padding around the link text */
+    border-radius: 4px; /* Rounded corners for a softer look */
+    font-size: 16px; /* Larger font size for better visibility */
+    font-weight: bold; /* Bold text for emphasis */
 }
 
 .toggle-menu {
@@ -30,6 +51,7 @@ h1 {
     border: none;
     font-size: 24px;
     cursor: pointer;
+    color: #007bff;
 }
 
 .content {
@@ -59,34 +81,50 @@ th, td {
     border-bottom: 1px solid #e0e0e0;
 }
 
+
+
 th {
-    background-color: #f8f9fa;
+    background-color: #e3f2fd;
     font-weight: 600;
+    color: #007bff;
 }
 
 .preview-container {
     flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
 }
 
 .preview-controls {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
 }
 
 .preview-controls button {
     padding: 8px 16px;
-    background-color: #f0f2f5;
+    background-color: #e3f2fd;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .preview-controls button.active {
     background-color: #007bff;
+    color: #fff;
+}
+
+.preview-controls button:hover {
+    background-color: #0056b3;
     color: #fff;
 }
 
@@ -122,6 +160,6 @@ iframe {
     }
 
     .preview-container {
-        height: calc(100vh - 100px);
+        height: calc(100vh - 200px);
     }
 }
