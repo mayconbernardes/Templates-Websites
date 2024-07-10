@@ -39,7 +39,7 @@ h1 {
 .previewLink.selected {
     background-color: rgb(0, 0, 0); /* Dark background color when selected */
     color: #f2ff01; /* White text color */
-    padding: 8px 40px; /* Padding around the link text */
+    padding: 8px 5px; /* Padding around the link text */
     border-radius: 4px; /* Rounded corners for a softer look */
     font-size: 16px; /* Larger font size for better visibility */
     font-weight: bold; /* Bold text for emphasis */
@@ -88,7 +88,34 @@ th {
     font-weight: 600;
     color: #007bff;
 }
+/* Button styles */
+button {
+    padding: 10px 20px;
+    background-color: #000000;
+    color: rgb(234, 255, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 10px 0px 15px; /* Adjust spacing between buttons */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
 
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled button styles */
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Optional: Adjust button width to maintain consistent size */
+#prevPage, #nextPage {
+    width: 120px; /* Adjust width as needed */
+}
 .preview-container {
     flex: 1;
     display: flex;

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const iframe = document.getElementById('previewFrame');
     const selectedTemplate = document.getElementById('selectedTemplate');
     const templateList = document.getElementById('templateList');
+    const prevPageButton = document.getElementById('prevPage');
+    const nextPageButton = document.getElementById('nextPage');
 
     toggleMenu.addEventListener('click', function() {
         content.classList.toggle('show-menu');
@@ -153,37 +155,79 @@ const templates = [
     { id: 165, name: 'vcare-free-html5-template-hospital-website', url: 'https://learning-zone.github.io/website-templates/vcare-free-html5-template-hospital-website/' },
     { id: 166, name: 'vone-free-business-html5-responsive-website', url: 'https://learning-zone.github.io/website-templates/vone-free-business-html5-responsive-website/' },
     { id: 167, name: 'vteam-a-corporate-multipurpose-free-bootstrap-responsive-template', url: 'https://learning-zone.github.io/website-templates/vteam-a-corporate-multipurpose-free-bootstrap-responsive-template/' },
-    { id: 168, name: 'wallpaper', url: 'https://learning-zone.github.io/website-templates/wallpaper/' },
-    { id: 169, name: 'wedding-bootstrap-free-website-template', url: 'https://learning-zone.github.io/website-templates/wedding-bootstrap-free-website-template/' },
     { id: 170, name: 'wow-portfolio-multi-purpose-html5-template', url: 'https://learning-zone.github.io/website-templates/wow-portfolio-multi-purpose-html5-template/' },
 ];
-templates.forEach(template => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td>${template.id}</td>
-        <td>${template.name}</td>
-        <td><a href="#" class="previewLink" data-url="${template.url}" data-name="${template.name}" data-id="${template.id}">Preview</a></td>
-    `;
-    templateList.appendChild(tr);
-});
+let currentPage = 1;
+    const templatesPerPage = 10;
 
-templateList.addEventListener('click', function(event) {
-    if (event.target.classList.contains('previewLink')) {
-        event.preventDefault();
-        const url = event.target.dataset.url;
-        const name = event.target.dataset.name;
-        const id = event.target.dataset.id;
+    function displayTemplates(page) {
+        templateList.innerHTML = '';
 
-        // Remove 'selected' class from all links
-        document.querySelectorAll('.previewLink').forEach(link => {
-            link.classList.remove('selected');
+        const startIndex = (page - 1) * templatesPerPage;
+        const endIndex = startIndex + templatesPerPage;
+        const paginatedTemplates = templates.slice(startIndex, endIndex);
+
+        paginatedTemplates.forEach(template => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${template.id}</td>
+                <td>${template.name}</td>
+                <td><a href="#" class="previewLink" data-url="${template.url}" data-name="${template.name}" data-id="${template.id}">Preview</a></td>
+            `;
+            templateList.appendChild(tr);
         });
-
-        // Add 'selected' class to the clicked link
-        event.target.classList.add('selected');
-
-        iframe.src = url;
-        selectedTemplate.textContent = `Selected Template: ${name} (#${id})`;
     }
-});
+
+    function updatePaginationButtons() {
+        if (currentPage === 1) {
+            prevPageButton.disabled = true;
+        } else {
+            prevPageButton.disabled = false;
+        }
+
+        const totalPages = Math.ceil(templates.length / templatesPerPage);
+        if (currentPage === totalPages) {
+            nextPageButton.disabled = true;
+        } else {
+            nextPageButton.disabled = false;
+        }
+    }
+
+    prevPageButton.addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayTemplates(currentPage);
+            updatePaginationButtons();
+        }
+    });
+
+    nextPageButton.addEventListener('click', function() {
+        const totalPages = Math.ceil(templates.length / templatesPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayTemplates(currentPage);
+            updatePaginationButtons();
+        }
+    });
+
+    displayTemplates(currentPage);
+    updatePaginationButtons();
+
+    templateList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('previewLink')) {
+            event.preventDefault();
+            const url = event.target.dataset.url;
+            const name = event.target.dataset.name;
+            const id = event.target.dataset.id;
+
+            document.querySelectorAll('.previewLink').forEach(link => {
+                link.classList.remove('selected');
+            });
+
+            event.target.classList.add('selected');
+
+            iframe.src = url;
+            selectedTemplate.textContent = `Selected Template: ${name} (#${id})`;
+        }
+    });
 });
